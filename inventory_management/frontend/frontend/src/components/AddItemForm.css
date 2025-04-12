@@ -1,0 +1,42 @@
+/* Form container styling */
+.card {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Form element spacing */
+.form-control {
+  margin-bottom: 1rem;
+}
+
+/* Button styling */
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .col-md-8 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* Form input sizing */
+.form-control {
+  max-width: 100%;
+}
+
+/* Label styling */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}

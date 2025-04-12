@@ -1,38 +1,71 @@
-.App {
-  text-align: center;
+:root {
+  --app-height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Main app container */
+.app-container {
+  padding: 20px;
+  min-height: calc(var(--app-height) - 120px); /* Adjust based on header/footer height */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Sidebar Layout */
+.app-wrapper {
+  display: flex;
+  min-height: var(--app-height);
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  margin-left: 200px; /* Matches sidebar width */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.main-content {
+  flex-grow: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Flex layout for the app */
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.min-vh-100 {
+  min-height: var(--app-height);
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 15px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .navbar-collapse {
+    background-color: #1976d2;
+    margin-top: 10px;
+    border-radius: 4px;
+    padding: 15px;
+  }
+
+  .content-wrapper {
+    margin-left: 0;
+  }
+  
+  :root {
+    --app-height: 100vh; /* Fallback for mobile browsers */
   }
 }
