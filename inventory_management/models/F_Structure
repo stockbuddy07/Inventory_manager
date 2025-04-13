@@ -1,5 +1,0 @@
-inventory_management/
-├── models/
-│   └── item.model.js
-├── server.js (or app.js)
-├── package.json
