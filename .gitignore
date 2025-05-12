@@ -14,7 +14,7 @@ server/.env
 # Build artifacts
 dist/
 build/
-client/build/
+clients/build/
 server/build/
 
 # OS-specific files
