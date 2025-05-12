@@ -1,42 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserCircle, FaBox, FaTruck, FaShoppingCart, FaChartPie, FaCogs, FaTachometerAlt } from 'react-icons/fa';
+import {
+  FaUserCircle, FaBox, FaTruck, FaShoppingCart,
+  FaChartPie, FaCogs, FaTachometerAlt, FaSun, FaMoon
+} from 'react-icons/fa';
 import './dashboard.css';
 
 function Dashboard() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    document.body.className = darkMode ? 'dark-mode' : '';
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="dashboard-layout">
+    <div className={`dashboard ${darkMode ? 'dark' : ''}`}>
+     
+
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-header">
-          <div className="logo"> <span>StockBuddy</span></div>
+          <h2>Inventory Management</h2>
         </div>
-        <nav className="sidebar-nav">
-          <Link to="/dashboard" className="nav-link"><FaTachometerAlt /> Dashboard</Link>
-          <Link to="/admin" className="nav-link"><FaCogs /> Admin</Link>
-          <Link to="/suppliers" className="nav-link"><FaTruck /> Supplier</Link>
-          <Link to="/items" className="nav-link"><FaBox /> Items</Link>
-          <Link to="/orders" className="nav-link"><FaShoppingCart /> Purchase</Link>
-          <Link to="/sales" className="nav-link"><FaChartPie /> Sales</Link>
+        <nav className="nav-menu">
+          <Link to="/dashboard" className="nav-item"><FaTachometerAlt /> <span>Dashboard</span></Link>
+          <Link to="/admin" className="nav-item"><FaCogs /> <span>Admin</span></Link>
+          <Link to="/suppliers" className="nav-item"><FaTruck /> <span>Suppliers</span></Link>
+          <Link to="/items" className="nav-item"><FaBox /> <span>Items</span></Link>
+          <Link to="/orders" className="nav-item"><FaShoppingCart /> <span>Purchase</span></Link>
+          <Link to="/sales" className="nav-item"><FaChartPie /> <span>Sales</span></Link>
         </nav>
       </aside>
 
       {/* Main Content */}
-      <div className="main-section">
-        <header className="topbar">
-          <h2>Stock Distribution</h2>
-          <FaUserCircle className="user-icon" />
+      <main className="main">
+        <header className="main-header">
+           {/* Top-right toggle icon */}
+          <h2>Dashboard Overview</h2>
+          <div className="theme-toggle" onClick={toggleDarkMode}>
+            {darkMode ? <FaSun /> : <FaMoon />}
+          </div>
         </header>
 
-        <main className="main-content">
-          <h1>Welcome to Dashboard</h1>
-          <p>This is your inventory management control panel.</p>
-        </main>
-
-        <footer className="footer">
-          &copy; 2025 WEBNAME. Designed and Developed by WEBNAME.
+        <footer className="main-footer">
+          &copy; 2025 Inventory Management. All rights reserved.
         </footer>
-      </div>
+      </main>
     </div>
   );
 }
