@@ -1,13 +1,13 @@
 # Node.js dependencies
 node_modules/
-client/node_modules/
+clients/node_modules/
 server/node_modules/
 .cache/
 *.pack
 
 # Environment and log files
 .env
-client/.env
+clients/.env
 server/.env
 *.log
 
