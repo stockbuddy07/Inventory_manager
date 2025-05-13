@@ -8,94 +8,82 @@ function Orders() {
     quantity: '',
     quantityType: 'PCS',
     date: '',
-    status: 'Pending'
+    status: 'Pending', // Status is set directly here
+    price: ''
   });
 
-  // Fetch orders
   useEffect(() => {
     axios.get('http://localhost:5000/api/orders')
       .then(res => setOrders(res.data))
       .catch(err => console.error(err));
   }, []);
 
-  // Add or update order
   const addOrder = () => {
     let quantityToStore = newOrder.quantity;
     let unit = newOrder.quantityType;
+
+    if (!newOrder.item || !newOrder.quantity || !newOrder.date || !newOrder.price) {
+      alert('Please fill in all fields');
+      return;
+    }
 
     if (unit === 'KG') {
       quantityToStore = newOrder.quantity * 1000;
       unit = 'grams';
     }
 
-    const existingOrder = orders.find(order =>
-      order.item.toLowerCase() === newOrder.item.toLowerCase() &&
-      order.quantityType === unit &&
-      order.status === newOrder.status
-    );
+    const orderToSend = {
+      item: newOrder.item,
+      quantity: quantityToStore,
+      quantity_type: unit,
+      date: newOrder.date,
+      status: 'Pending', // Enforced here again
+      price: Number(newOrder.price)
+    };
 
-    if (existingOrder) {
-      const updatedQuantity = Number(existingOrder.quantity) + Number(quantityToStore);
+    axios.post('http://localhost:5000/api/orders', orderToSend)
+      .then(res => {
+        setOrders([...orders, res.data]);
+        resetNewOrder();
+      })
+      .catch(err => console.error(err));
+  };
 
-      axios.put(`http://localhost:5000/api/orders/${existingOrder._id}`, {
-        quantity: updatedQuantity
+  const markComplete = (id) => {
+    const price = prompt('Enter price per unit for this stock:');
+
+    if (price !== null && !isNaN(price)) {
+      axios.put(`http://localhost:5000/api/orders/${id}`, {
+        status: 'Completed',
+        price: parseFloat(price)
       })
         .then(res => {
           const updatedOrders = orders.map(order =>
-            order._id === existingOrder._id
-              ? { ...order, quantity: updatedQuantity }
+            order._id === id
+              ? {
+                  ...order,
+                  status: 'Completed',
+                  price: parseFloat(price),
+                  total_price: parseFloat(price) * order.quantity
+                }
               : order
           );
           setOrders(updatedOrders);
-          resetNewOrder();
         })
         .catch(err => console.error(err));
     } else {
-      const orderToSend = {
-        ...newOrder,
-        quantity: quantityToStore,
-        quantityType: unit
-      };
-
-      axios.post('http://localhost:5000/api/orders', orderToSend)
-        .then(res => {
-          setOrders([...orders, res.data]);
-          resetNewOrder();
-        })
-        .catch(err => console.error(err));
+      alert("Invalid price input.");
     }
   };
 
-  // Mark as completed
- const markComplete = (id) => {
-  const price = prompt('Enter price per unit for this stock:');
-
-  if (price !== null && !isNaN(price)) {
-    axios.put(`http://localhost:5000/api/orders/${id}`, {
-      status: 'Completed',
-      price: parseFloat(price)
-    })
-      .then(res => {
-        const updatedOrders = orders.map(order =>
-          order._id === id ? { ...order, status: 'Completed' } : order
-        );
-        setOrders(updatedOrders);
-      })
-      .catch(err => console.error(err));
-  } else {
-    alert("Invalid price input.");
-  }
-};
-
-
-  // Reset form
   const resetNewOrder = () => {
     setNewOrder({
       item: '',
       quantity: '',
       quantityType: 'PCS',
       date: '',
-      status: 'Pending'
+      status: 'Pending', // Reset again here
+      price: ''
     });
   };
 
@@ -127,20 +115,23 @@ function Orders() {
           value={newOrder.date}
           onChange={(e) => setNewOrder({ ...newOrder, date: e.target.value })}
         />
-        <select
-          value={newOrder.status}
-          onChange={(e) => setNewOrder({ ...newOrder, status: e.target.value })}
-        >
-          <option value="Pending">Pending</option>
-          <option value="Completed">Completed</option>
-        </select>
+
+        <input
+          type="number"
+          placeholder="Price per unit"
+          value={newOrder.price}
+          onChange={(e) => setNewOrder({ ...newOrder, price: e.target.value })}
+        />
+
         <button onClick={addOrder}>Add Order</button>
       </div>
 
       <ul>
         {orders.map(order => (
           <li key={order._id}>
-            {order.item} - {order.quantity} {order.quantityType} - {new Date(order.date).toLocaleDateString()} - {order.status}
+            {order.item} - {order.quantity} {order.quantity_type || 'units'} - {new Date(order.date).toLocaleDateString()} - {order.status}
+            {order.price ? ` - ₹${order.price}/unit` : ''}
+            {order.total_price ? ` - Total: ₹${Number(order.total_price).toFixed(2)}` : ''}
             {order.status !== 'Completed' && (
               <button onClick={() => markComplete(order._id)} style={{ marginLeft: '10px' }}>
                 Mark as Complete
