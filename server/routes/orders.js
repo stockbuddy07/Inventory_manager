@@ -16,23 +16,13 @@ router.get('/', async (req, res) => {
 // CREATE or UPDATE an order and manage Item quantity
 router.post('/', async (req, res) => {
   try {
-    const {
-      item,
-      quantity,
-      quantity_type,
-      status,
-      date,
-      price
-    } = req.body;
-
+    const { item, quantity, quantityType, status, date } = req.body;
     const normalizedItemName = item.trim();
-    const normalizedType = quantity_type.trim();
 
-    const total_price = price && quantity ? price * quantity : 0;
-
+    // Check if order exists (case-insensitive, matching type & status)
     let existingOrder = await Order.findOne({
       item: { $regex: new RegExp(`^${normalizedItemName}$`, 'i') },
-      quantity_type: normalizedType,
+      quantityType,
       status
     });
 
@@ -40,38 +30,33 @@ router.post('/', async (req, res) => {
 
     if (existingOrder) {
       existingOrder.quantity += Number(quantity);
-      existingOrder.total_price = (Number(existingOrder.total_price || 0) + total_price);
-      if (price) existingOrder.price = price;
       orderResult = await existingOrder.save();
     } else {
       orderResult = await Order.create({
         item: normalizedItemName,
         quantity: Number(quantity),
-        quantity_type: normalizedType,
-        date: date || new Date(),
+        quantityType,
         status,
-        price,
-        total_price
+        date: date || new Date()
       });
     }
 
-    // Update stock if completed
+    // If order is already marked as "Completed", update items table immediately
     if (status === 'Completed') {
       const existingItem = await Item.findOne({
         name: { $regex: new RegExp(`^${normalizedItemName}$`, 'i') },
-        quantity_type: normalizedType
+        quantity_type: quantityType
       });
 
       if (existingItem) {
         existingItem.quantity += Number(quantity);
-        if (price) existingItem.price = price;
         await existingItem.save();
       } else {
         await Item.create({
           name: normalizedItemName,
           quantity: Number(quantity),
-          quantity_type: normalizedType,
-          price: price || 0,
+          quantity_type: quantityType,
+          price: 0,
           supplier: ''
         });
       }
@@ -83,7 +68,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT: Update order (mark as complete)
+// PUT: Mark order as completed and update item stock and price
+// PUT: Mark order as completed and update item stock and price
 router.put('/:id', async (req, res) => {
   try {
     const { status, price } = req.body;
@@ -91,29 +77,27 @@ router.put('/:id', async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (!order) return res.status(404).json({ error: 'Order not found' });
 
-    if (status) order.status = status;
-    if (price !== undefined && !isNaN(price)) {
-      order.price = price;
-      order.total_price = price * order.quantity;
-    }
-
+    order.status = status;
     await order.save();
 
     if (status === 'Completed') {
+      const normalizedItemName = order.item.trim();
       const existingItem = await Item.findOne({
-        name: { $regex: new RegExp(`^${order.item}$`, 'i') },
-        quantity_type: order.quantity_type
+        name: { $regex: new RegExp(`^${normalizedItemName}$`, 'i') },
+        quantity_type: order.quantityType
       });
 
       if (existingItem) {
-        existingItem.quantity += order.quantity;
-        if (price) existingItem.price = price;
+        existingItem.quantity += Number(order.quantity);
+        if (price !== undefined && price !== null && !isNaN(price)) {
+          existingItem.price = Number(price);
+        }
         await existingItem.save();
       } else {
         await Item.create({
-          name: order.item,
-          quantity: order.quantity,
-          quantity_type: order.quantity_type,
+          name: normalizedItemName,
+          quantity: Number(order.quantity),
+          quantity_type: order.quantityType,
           price: price || 0,
           supplier: ''
         });
