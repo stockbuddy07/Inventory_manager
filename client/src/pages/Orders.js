@@ -12,7 +12,8 @@ function Orders({ darkMode, toggleDarkMode }) {
     quantity: '',
     quantityType: 'PCS',
     date: '',
-    status: 'Pending'
+    status: 'Pending', // Status is set directly here
+    price: ''
   });
 
   // New states for pagination and search
@@ -29,6 +30,11 @@ function Orders({ darkMode, toggleDarkMode }) {
   const addOrder = () => {
     let quantityToStore = newOrder.quantity;
     let unit = newOrder.quantityType;
+
+    if (!newOrder.item || !newOrder.quantity || !newOrder.date || !newOrder.price) {
+      alert('Please fill in all fields');
+      return;
+    }
 
     if (unit === 'KG') {
       quantityToStore = newOrder.quantity * 1000;
@@ -61,13 +67,12 @@ function Orders({ darkMode, toggleDarkMode }) {
         quantityType: unit
       };
 
-      axios.post('http://localhost:5000/api/orders', orderToSend)
-        .then(res => {
-          setOrders([...orders, res.data]);
-          resetNewOrder();
-        })
-        .catch(err => console.error(err));
-    }
+    axios.post('http://localhost:5000/api/orders', orderToSend)
+      .then(res => {
+        setOrders([...orders, res.data]);
+        resetNewOrder();
+      })
+      .catch(err => console.error(err));
   };
 
   const markComplete = (id) => {
@@ -92,7 +97,8 @@ function Orders({ darkMode, toggleDarkMode }) {
       quantity: '',
       quantityType: 'PCS',
       date: '',
-      status: 'Pending'
+      status: 'Pending', // Reset again here
+      price: ''
     });
   };
 
