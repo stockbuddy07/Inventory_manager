@@ -16,13 +16,23 @@ router.get('/', async (req, res) => {
 // CREATE or UPDATE an order and manage Item quantity
 router.post('/', async (req, res) => {
   try {
-    const { item, quantity, quantityType, status, date } = req.body;
-    const normalizedItemName = item.trim();
+    const {
+      item,
+      quantity,
+      quantity_type,
+      status,
+      date,
+      price
+    } = req.body;
 
-    // Check if order exists (case-insensitive, matching type & status)
+    const normalizedItemName = item.trim();
+    const normalizedType = quantity_type.trim();
+
+    const total_price = price && quantity ? price * quantity : 0;
+
     let existingOrder = await Order.findOne({
       item: { $regex: new RegExp(`^${normalizedItemName}$`, 'i') },
-      quantityType,
+      quantity_type: normalizedType,
       status
     });
 
@@ -30,33 +40,38 @@ router.post('/', async (req, res) => {
 
     if (existingOrder) {
       existingOrder.quantity += Number(quantity);
+      existingOrder.total_price = (Number(existingOrder.total_price || 0) + total_price);
+      if (price) existingOrder.price = price;
       orderResult = await existingOrder.save();
     } else {
       orderResult = await Order.create({
         item: normalizedItemName,
         quantity: Number(quantity),
-        quantityType,
+        quantity_type: normalizedType,
+        date: date || new Date(),
         status,
-        date: date || new Date()
+        price,
+        total_price
       });
     }
 
-    // If order is already marked as "Completed", update items table immediately
+    // Update stock if completed
     if (status === 'Completed') {
       const existingItem = await Item.findOne({
         name: { $regex: new RegExp(`^${normalizedItemName}$`, 'i') },
-        quantity_type: quantityType
+        quantity_type: normalizedType
       });
 
       if (existingItem) {
         existingItem.quantity += Number(quantity);
+        if (price) existingItem.price = price;
         await existingItem.save();
       } else {
         await Item.create({
           name: normalizedItemName,
           quantity: Number(quantity),
-          quantity_type: quantityType,
-          price: 0,
+          quantity_type: normalizedType,
+          price: price || 0,
           supplier: ''
         });
       }
@@ -68,8 +83,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT: Mark order as completed and update item stock and price
-// PUT: Mark order as completed and update item stock and price
+// PUT: Update order (mark as complete)
 router.put('/:id', async (req, res) => {
   try {
     const { status, price } = req.body;
@@ -77,27 +91,29 @@ router.put('/:id', async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (!order) return res.status(404).json({ error: 'Order not found' });
 
-    order.status = status;
+    if (status) order.status = status;
+    if (price !== undefined && !isNaN(price)) {
+      order.price = price;
+      order.total_price = price * order.quantity;
+    }
+
     await order.save();
 
     if (status === 'Completed') {
-      const normalizedItemName = order.item.trim();
       const existingItem = await Item.findOne({
-        name: { $regex: new RegExp(`^${normalizedItemName}$`, 'i') },
-        quantity_type: order.quantityType
+        name: { $regex: new RegExp(`^${order.item}$`, 'i') },
+        quantity_type: order.quantity_type
       });
 
       if (existingItem) {
-        existingItem.quantity += Number(order.quantity);
-        if (price !== undefined && price !== null && !isNaN(price)) {
-          existingItem.price = Number(price);
-        }
+        existingItem.quantity += order.quantity;
+        if (price) existingItem.price = price;
         await existingItem.save();
       } else {
         await Item.create({
-          name: normalizedItemName,
-          quantity: Number(order.quantity),
-          quantity_type: order.quantityType,
+          name: order.item,
+          quantity: order.quantity,
+          quantity_type: order.quantity_type,
           price: price || 0,
           supplier: ''
         });
