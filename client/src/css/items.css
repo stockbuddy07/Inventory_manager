@@ -1,0 +1,177 @@
+/* === Items Page === */
+
+/* Card Style */
+.item-card {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dashboard.dark .item-card {
+  background-color: #2a2a2a;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+/* Container */
+.items-container {
+  padding: 30px;
+  margin-top: 20px;
+  background-color: transparent;
+}
+
+/* Form Layout: 2 fields in a row */
+.item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.item-row .form-group {
+  flex: 1;
+  min-width: 220px;
+}
+
+.item-form input {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* .item-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #444;
+} */
+ .item-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #444;
+  font-weight: bold; /* ✅ Added bold font */
+}
+
+
+.dashboard.dark .item-form label {
+  color: #ddd;
+  font-weight: bold;
+}
+
+.dashboard.dark .item-form input {
+  background-color: #3a3a3a;
+  color: #fff;
+  border-color: #555;
+}
+
+.item-form input:focus {
+  border-color: #4caf50;
+}
+
+/* Submit Button */
+.item-form .submit-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.item-form .submit-button:hover {
+  background-color: #45a049;
+}
+
+.dashboard.dark .item-form .submit-button {
+  background-color: #6d6d6d;
+  color: #fff;
+  font-weight: bold;
+}
+
+.dashboard.dark .item-form .submit-button:hover {
+  background-color: #575757;
+}
+
+
+
+/* === Items Table (Styled same as Suppliers Table) === */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent; /* Card background applies */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.items-table th,
+.items-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  user-select: none;
+}
+
+.dashboard.dark .items-table th,
+.dashboard.dark .items-table td {
+  border-color: #444;
+}
+
+.items-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dashboard.dark .items-table th {
+  background-color: #3a3a3a;
+  color: #fff;
+}
+
+.items-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dashboard.dark .items-table tr:nth-child(even) {
+  background-color: #3a3a3a;
+}
+
+.items-table tr:hover {
+  background-color: #e8f7e8;
+}
+
+.dashboard.dark .items-table tr:hover {
+  background-color: #4a4a4a;
+}
+.pagination-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+  width: 100%;
+}
+
+.dashboard.dark .pagination-controls {
+  color: #ddd;
+}
+.item-table-card {
+  text-align: right;
+}
+

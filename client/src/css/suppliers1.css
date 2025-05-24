@@ -1,0 +1,171 @@
+/* === Suppliers Container === */
+.suppliers-container {
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dashboard.dark .suppliers-container {
+  background-color: #1e1e1e;
+}
+
+/* === Center Content === */
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* === Card Layout for Supplier Form === */
+.supplier-form-card {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dashboard.dark .supplier-form-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+/* === Supplier Form Inputs & Button === */
+.supplier-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.supplier-form input {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.dashboard.dark .supplier-form input {
+  background-color: #3a3a3a;
+  color: #fff;
+  border-color: #555;
+}
+
+.supplier-form input:focus {
+  border-color: #4CAF50;
+}
+
+.supplier-form button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.supplier-form button:hover {
+  background-color: #45a049;
+}
+
+.dashboard.dark .supplier-form button {
+  background-color: #6d6d6d;
+  color: #fff;
+}
+
+.dashboard.dark .supplier-form button:hover {
+  background-color: #575757;
+}
+
+/* === Suppliers Table === */
+.suppliers-table {
+  width: 90%;
+  max-width: 800px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard.dark .suppliers-table {
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+.suppliers-table th,
+.suppliers-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.dashboard.dark .suppliers-table th,
+.dashboard.dark .suppliers-table td {
+  border-color: #444;
+}
+
+.suppliers-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.dashboard.dark .suppliers-table th {
+  background-color: #3a3a3a;
+  color: #fff;
+}
+
+.suppliers-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dashboard.dark .suppliers-table tr:nth-child(even) {
+  background-color: #3a3a3a;
+}
+
+.suppliers-table tr:hover {
+  background-color: #e8f7e8;
+}
+
+.dashboard.dark .suppliers-table tr:hover {
+  background-color: #4a4a4a;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .suppliers-container {
+    padding: 20px;
+  }
+
+  .supplier-form-card {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .suppliers-table {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .suppliers-container {
+    padding: 15px;
+  }
+
+  .supplier-form-card {
+    padding: 15px;
+  }
+
+  .suppliers-table th, .suppliers-table td {
+    padding: 8px 10px;
+  }
+}

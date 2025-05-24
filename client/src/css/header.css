@@ -1,0 +1,82 @@
+/* === Header Styles === */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.main-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+/* Container for the right side: user icon + theme toggle */
+.header-actions {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* User icon button */
+.user-icon {
+  font-size: 1.6rem;
+  margin-right: 15px;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* User popup menu */
+.user-popup {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dashboard.dark .user-popup {
+  background-color: #2c2c2c;
+  color: #fff;
+  border-color: #444;
+}
+
+.user-popup p {
+  margin: 5px 0;
+}
+
+.user-popup button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.user-popup button:hover {
+  background-color: #45a049;
+}
+
+/* Dark mode toggle button */
+.theme-toggle {
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  color: #4caf50;
+}

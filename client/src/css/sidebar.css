@@ -1,0 +1,78 @@
+/* === Sidebar Styles === */
+.sidebar {
+  /* Sidebar container styling */
+  width: 250px;
+  background-color: #ffffff;
+  color: inherit;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Add box shadow */
+  margin: 0px;
+  height: calc(100vh - 20px); /* Full height with padding adjusted */
+}
+
+/* Dark mode sidebar styles */
+.dashboard.dark .sidebar {
+  background-color: #1f1f1f; /* Dark background */
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05); /* Lighter shadow for dark mode */
+}
+
+.sidebar-header h2 {
+  /* Sidebar header styling */
+  font-size: 1.6rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: inherit;
+}
+
+.nav-menu {
+  /* Vertical navigation menu */
+  display: flex;
+  flex-direction: column; /* Stack links vertically */
+}
+
+.nav-item {
+  /* Styling for each navigation item (link) */
+  display: flex;
+  align-items: center;
+  color: inherit;
+  /* text-decoration: none; */
+  margin-bottom: 15px;
+  transition: background 0.3s, color 0.3s; /* Smooth hover transition */
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.nav-item span {
+  /* Space between icon and text */
+  margin-left: 10px;
+}
+.nav-item, .nav-item:link, .nav-item:visited {
+  text-decoration: none !important;
+}
+
+.nav-item:hover {
+  /* Hover effect for nav items */
+  background-color: #d0f0e0; /* Light background color on hover */
+  color: #000; /* Dark text color on hover */
+}
+
+.dashboard.dark .nav-item:hover {
+  /* Dark mode hover effect */
+  background-color: #2a3f36; /* Darker background on hover */
+  color: #80ffdb; /* Light text color on hover */
+}
+/* Active nav item style */
+.nav-item.active {
+  background-color: #80ffdb;
+  color: #000;
+  font-weight: bold;
+}
+
+.dashboard.dark .nav-item.active {
+  background-color: #3b6e54;
+  color: #80ffdb;
+  font-weight: bold;
+}

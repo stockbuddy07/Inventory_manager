@@ -1,0 +1,308 @@
+/* Container */
+.orders-container {
+  padding: 20px;
+}
+
+.orders-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Centering content */
+.orders-content-center {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Card-like form container */
+.orders-form-card {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard.dark .orders-form-card {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+}
+
+/* Form Layout */
+.orders-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Vertical gap between form rows */
+  align-items: flex-start;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Group fields into rows */
+.orders-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* Horizontal space between two fields */
+  width: 100%;
+}
+
+/* Form Group Styling */
+.form-group {
+  display: flex;
+  align-items: center;
+  width: calc(50% - 20px); /* Two items per row */
+  min-width: 280px;
+  gap: 12px;
+}
+
+/* Label Styling */
+.form-group label {
+  width: 100px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Inputs & Selects */
+.orders-form input,
+.orders-form select {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 200px;
+  max-width: 100%;
+}
+
+.dashboard.dark .orders-form input,
+.dashboard.dark .orders-form select {
+  background-color: #3a3a3a;
+  color: #fff;
+  border-color: #555;
+}
+
+/* Submit Button */
+.orders-form button {
+  align-self: flex-start;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.orders-form button:hover {
+  background-color: #47ab4a;
+  
+}
+
+.dashboard.dark .orders-form button {
+  background-color: #6d6d6d;
+}
+
+.dashboard.dark .orders-form button:hover {
+  background-color: #575757;
+}
+
+/* Orders Table */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dashboard.dark .orders-table {
+  background-color: #2d2d2d;
+  color: #fff;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.dashboard.dark .orders-table th,
+.dashboard.dark .orders-table td {
+  border-bottom: 1px solid #444;
+}
+
+.orders-table th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+.dashboard.dark .orders-table th {
+  background-color: #3a3a3a;
+}
+
+.orders-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.dashboard.dark .orders-table tr:hover {
+  background-color: #3f3f3f;
+}
+
+/* Complete Button */
+.orders-table button {
+  padding: 6px 14px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.orders-table button:hover {
+  background-color: #218838;
+}
+
+.dashboard.dark .orders-table button {
+  background-color: #388e3c;
+}
+
+.dashboard.dark .orders-table button:hover {
+  background-color: #2e7d32;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .orders-form .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .form-group label {
+    width: 100px;
+  }
+}
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.entries-select select,
+.search-box input {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.dashboard.dark .entries-select select,
+.dashboard.dark .search-box input {
+  background-color: #3a3a3a;
+  color: #fff;
+  border-color: #555;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.pagination-controls button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #6a67ce;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.dashboard.dark .pagination-controls button {
+  background-color: #5c5c8a;
+}
+
+
+.orders-table-card {
+  background: var(--card-bg, #fff);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: var(--card-shadow, 0 2px 8px rgba(0,0,0,0.1));
+  color: var(--text-color);
+}
+
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
+/* Light mode (default) */
+.orders-table-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #000;
+}
+
+/* Dark mode */
+.dashboard.dark .orders-table-card {
+  background: #2e2e2e; /* dark background */
+  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+  color: #ddd;
+}
+
+.dashboard.dark .orders-table-card table {
+  color: #ddd;
+}
+
+.dashboard.dark .orders-table-card th,
+.dashboard.dark .orders-table-card td {
+  border-color: #555;
+}
+
+.dashboard.dark .orders-table-card .table-controls input,
+.dashboard.dark .orders-table-card .table-controls select {
+  background-color: #444;
+  color: #eee;
+  border: 1px solid #666;
+}
+
+.dashboard.dark .orders-table-card button {
+  background-color: #555;
+  color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dashboard.dark .orders-table-card button:disabled {
+  background-color: #333;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.dashboard.dark .orders-table-card button:hover:not(:disabled) {
+  background-color: #777;
+}
